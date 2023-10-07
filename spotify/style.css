@@ -62,7 +62,7 @@ nav ul li{
 
 .bottom{
     position: sticky;
-    height: 70px;
+    height: 115px;
     background-color: black;
     color: white;
     bottom: 0;
@@ -83,15 +83,21 @@ nav ul li{
 }
 
 #myprogressbar{
-    width: vw;
+    width: 80vw;
+    cursor: pointer;
 }
+
+.songitemcontainer{
+    margin-top: 74px ;
+}
+
 
 
 .songitem{
     height: 50px;
     display: flex;
-    background-color: white;
-    width: 100%;
+    background-color: antiquewhite;
+    width: 150%;
     color: black;
     margin: 12px 0;
     justify-content: space-between;
@@ -104,10 +110,22 @@ nav ul li{
     width: 43px;
     margin: 0 23px;
     border-radius: 34px;
-
-
 }
 
 .timestamp{
     margin: 0 23px;
+}
+
+.timestamp i{
+    cursor: pointer;
+}
+
+.songinfo{
+    position: absolute;
+    left: 10vw;
+}
+
+.songinfo img{
+    opacity: 0;
+    transition: opacity is ease-in;
 }
