@@ -6,6 +6,7 @@ let audioElement = new Audio('song/1.mp3');
 let masterplay = document.getElementById('masterplay');
 let myprogressbar = document.getElementById('myprogressbar');
 let gif = document.getElementById('gif');
+let mastersongname = document.getElementById("mastersongname");
 let songitem = Array.from(document.getElementsByClassName('songitem'));
 let songs = [  
     {songname: 'Dhundhala' , filepath: "song/1.mp3" , coverpath: "covers/11.jpg"},
@@ -49,17 +50,77 @@ masterplay.addEventListener('click', ()=>{
 
 // listen to events
 
-myprogressbar.addEventListener('timeupdate' , ()=>{
+audioElement.addEventListener('timeupdate' , ()=>{
+    console.log('timeupdate');
     
     // update seekbar
 
     progress = parseInt((audioElement.currentTime/audioElement.duration)* 100);
-   
+    console.log('myprogressbar');
     myprogressbar.value = progress;
 
 })
 
 myprogressbar.addEventListener('change' , ()=>{
-    audioElement.currentTime = myprogressbar.value * audioElement.duration / 100;
+    audioElement.currentTime = ((myprogressbar.value * audioElement.duration) / 100);
 
+})
+
+
+const makeAllPlays = ()=>{
+    Array.from(document.getElementsByClassName('songitemplay')).forEach((element)=>{
+        element.classList.remove('fa-circle-pause');
+        element.classList.add('fa-circle-play');
+    })
+}
+Array.from(document.getElementsByClassName('songitemplay')).forEach((element)=>{
+    element.addEventListener('click' , (e)=>{
+        makeAllPlays();
+        songindex = parseInt(e.target.id);
+        e.target.classList.remove('fa-circle-play');
+        e.target.classList.add('fa-circle-pause');
+        audioElement.src = `song/${songindex +1}.mp3`;
+        mastersongname.innerText = songs[songindex].songname
+        audioElement.currentTime = 0;
+        audioElement.play();
+        gif.style.opacity = 1;
+        masterplay.classList.remove('fa-circle-play');
+        masterplay.classList.add('fa-circle-pause');
+    })
+})
+
+
+document.getElementById('next').addEventListener('click' , ()=>{
+    if(songindex >=8){
+        songindex = 0
+    }
+    else{
+        songindex +=1;
+    }
+    audioElement.src = `song/${songindex +1}.mp3`;
+    mastersongname.innerText = songs[songindex].songname
+    audioElement.currentTime = 0;
+    audioElement.play();
+    gif.style.opacity = 1;
+    masterplay.classList.remove('fa-circle-play');
+    masterplay.classList.add('fa-circle-pause');
+    
+})
+
+document.getElementById('previous').addEventListener('click' , ()=>{
+    if(songindex <=0){
+        songindex = 0
+    }
+    else{
+        songindex -=1;
+
+    }
+    audioElement.src = `song/${songindex +1}.mp3`;
+    mastersongname.innerText = songs[songindex].songname
+    audioElement.currentTime = 0;
+    audioElement.play();
+    gif.style.opacity = 1;
+    masterplay.classList.remove('fa-circle-play');
+    masterplay.classList.add('fa-circle-pause');
+    
 })
